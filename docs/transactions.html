@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f5f5f5;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #333;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar img.logo {
+            display: block;
+            margin: 0 auto 20px auto;
+            width: 150px;
+            height: auto;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+            background-color: #444;
+            border-radius: 5px;
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: #555;
+        }
+
+        .container {
+            margin-left: 260px;
+            padding: 20px;
+            width: calc(100% - 260px);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .navbar-image {
+            width: 40px;
+            height: 40px;
+            padding: 5px;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 180px;
+            }
+
+            .container {
+                margin-left: 200px;
+                padding: 15px;
+                width: calc(100% - 200px);
+            }
+
+            table {
+                font-size: 14px;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .container {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            table, th, td {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <aside class="sidebar">
+            <img src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-responsive-website/navbar-logo-img.png"
+            class="navbar-image"
+            alt="Logo"/>
+            <ul>
+                <li class="menu-item"><a href="index.html">Dashboard</a></li>
+                <li class="menu-item"><a href="transactions.html" class="active">Transactions</a></li>
+                <li class="menu-item"><a href="add-goal.html">Add New Goal</a></li>
+                <li class="menu-item"><a href="view-goals.html">View All Goals</a></li>
+                <li class="menu-item"><a href="donation.html">Make a Donation</a></li>
+            </ul>
+        </aside>
+    </header>
+
+    <div class="container">
+        <h1>Transaction Dashboard</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Donor Name</th>
+                    <th>Donation Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="transaction-list">
+                <!-- Transaction entries will be dynamically added here -->
+            </tbody>
+        </table>
+
+        <button class="back-button" onclick="window.location.href='index.html'">Back to Dashboard</button>
+    </div>
+
+    <script>
+        // Mock transaction data if not available in localStorage
+        const sampleTransactions = [
+            { name: 'John Doe', amount: '$100', date: '2023-09-15' },
+            { name: 'Jane Smith', amount: '$50', date: '2023-09-14' },
+            { name: 'Alex Johnson', amount: '$75', date: '2023-09-12' }
+        ];
+
+        // Load from localStorage or use sample data
+        const transactions = JSON.parse(localStorage.getItem('transactions')) || sampleTransactions;
+
+        // Populate transaction table
+        const transactionList = document.getElementById('transaction-list');
+        transactions.forEach(transaction => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${transaction.name}</td>
+                <td>${transaction.amount}</td>
+                <td>${transaction.date}</td>
+            `;
+            transactionList.appendChild(row);
+        });
+    </script>
+</body>
+</html>

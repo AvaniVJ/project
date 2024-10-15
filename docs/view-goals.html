@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All Goals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #007bff;
+            padding: 10px;
+            color: white;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+
+        .navbar-image {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #575757;
+        }
+
+        .container {
+            margin-left: 260px;
+            padding: 20px;
+            width: calc(100% - 260px);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #goals-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #goals-table th, #goals-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #goals-table th {
+            background-color: #f2f2f2;
+        }
+
+        #goals-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .container {
+                margin-left: 220px;
+                width: calc(100% - 220px);
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .container {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            #goals-table, th, td {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <aside class="sidebar">
+            <img
+                src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-responsive-website/navbar-logo-img.png"
+                class="navbar-image"
+                alt="Logo"
+            />
+            <ul>
+                <li class="menu-item"><a href="index.html">Dashboard</a></li>
+                <li class="menu-item"><a href="transactions.html">Transactions</a></li>
+                <li class="menu-item"><a href="add-goal.html">Add New Goal</a></li>
+                <li class="menu-item"><a href="view-goals.html" class="active">View All Goals</a></li>
+                <li class="menu-item"><a href="donation.html">Make a Donation</a></li>
+            </ul>
+        </aside>
+    </header>
+
+    <div class="container">
+        <h1>Your Goals</h1>
+        <table id="goals-table">
+            <thead>
+                <tr>
+                    <th>Goal</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Goals will be populated here -->
+            </tbody>
+        </table>
+        <button class="back-button" onclick="window.location.href='index.html'">Back to Dashboard</button>
+    </div>
+
+    <script>
+        // Fetch goals from localStorage
+        const goals = JSON.parse(localStorage.getItem('goals')) || [];
+
+        // Populate the goals table
+        const tableBody = document.querySelector('#goals-table tbody');
+        if (goals.length === 0) {
+            // If no goals, show a placeholder message
+            const row = document.createElement('tr');
+            row.innerHTML = `<td colspan="2">No goals available. Please add new goals.</td>`;
+            tableBody.appendChild(row);
+        } else {
+            goals.forEach(goal => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${goal.title}</td><td>$${goal.amount}</td>`;
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
