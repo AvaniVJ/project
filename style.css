@@ -1,192 +1,43 @@
-/* General Styles */
-body {
+/* Reset margin and set full screen */
+body, html {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
-    scroll-behavior: smooth;
-    color: #333;
-    overflow-x: hidden;
-  }
-  
-  section {
-    padding: 50px;
-    text-align: center;
-  }
-  
-  /* Welcome Section */
-  .welcome {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #20c997;
-    color: white;
+    height: 100%;
     overflow: hidden;
+    font-family: Arial, sans-serif;
   }
   
-  .welcome .background-grid {
-    position: absolute;
-    top: 0;
-    left: 0;
+  /* Animated background gradient */
+  body {
+    background: linear-gradient(45deg, #ff9a8b, #f2ffdd, #a1c4fd, #c2e9fb);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+  }
+  
+  /* Create a gradient animation */
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Full-screen canvas container */
+  #canvas-container {
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    z-index: 1;
-    opacity: 0.4;
+    position: absolute;
+    top: 0;
   }
   
-  .welcome .background-grid div {
-    width: 15px;
-    height: 15px;
-    margin: auto;
-    background: white;
-    border-radius: 50%;
-    animation: float 5s ease-in-out infinite;
-  }
-  
-  .welcome .background-grid div:nth-child(odd) {
-    animation-duration: 6s;
-  }
-  
-  .welcome .background-grid div:nth-child(even) {
-    animation-duration: 4s;
-  }
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-  
-  .welcome .welcome-text {
-    z-index: 2;
-    text-align: center;
-  }
-  
-  .welcome h1 {
+  /* Title style */
+  #title {
+    position: absolute;
+    top: 5%; /* Adjust position for title */
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 3rem;
-    margin: 0;
-  }
-  
-  .welcome p {
-    margin: 10px 0 20px;
-    font-size: 1.2rem;
-  }
-  
-  .scroll-indicator {
-    margin-top: 20px;
-    font-size: 1rem;
-    animation: bounce 2s infinite;
-    cursor: pointer;
-  }
-  
-  @keyframes bounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(10px);
-    }
-  }
-  
-  /* Roles Section */
-  .roles {
-    background: #f9f9f9;
-  }
-  
-  .roles h2 {
-    margin-bottom: 30px;
-    font-size: 2rem;
-  }
-  
-  .role-cards {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    perspective: 1000px;
-  }
-  
-  /* Card Styles */
-  .card {
-    width: 250px;
-    height: 300px;
-    perspective: 1000px;
-    cursor: pointer;
-  }
-  
-  .card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transform: rotateY(0deg);
-    transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
-  }
-  
-  .card:hover .card-inner {
-    transform: rotateY(180deg);
-  }
-  
-  .card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-size: 1rem;
-    color: white;
-  }
-  
-  .card-front {
-    background: white;
-    color: #333;
-  }
-  
-  .card-back {
-    background: #6a11cb;
-    transform: rotateY(180deg);
-  }
-  
-  .card.admin .card-back {
-    background: #ff6f61;
-  }
-  
-  .card.faculty .card-back {
-    background: #6c63ff;
-  }
-  
-  .card.student .card-back {
-    background: #28a745;
-  }
-  .welcome .background-grid {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    z-index: 1;
-    opacity: 0.2;
-  }
-  
-  .welcome .background-grid div {
-    width: 15px;
-    height: 15px;
-    margin: auto;
-    background: white;
-    border-radius: 50%;
-    animation: float 6s infinite ease-in-out, fade 8s infinite alternate;
+    color: #fff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+    font-weight: bold;
+    opacity: 0; /* Start hidden */
   }
   
