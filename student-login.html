@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Login & Sign-Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #20c997;
+    }
+    .container {
+      background: #fff;
+      width: 400px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      cursor: pointer;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 5px;
+      background: #ff7e5f;
+      color: white;
+      transition: background 0.3s;
+    }
+
+    .tab.active {
+      background: #feb47b;
+    }
+
+    .form-container {
+      display: none;
+    }
+
+    .form-container.active {
+      display: block;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, select {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    button {
+      background: #ff7e5f;
+      border: none;
+      color: white;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #feb47b;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .back-link a {
+      color: #ff7e5f;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <div class="tab active" id="login-tab">Login</div>
+      <div class="tab" id="signup-tab">Sign-Up</div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-container active" id="login-form">
+      <h2>Student Login</h2>
+      <form action="/login" method="POST">
+        <input type="text" name="username_email" placeholder="Username or Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <div class="back-link">
+        <a href="forgot_password_student.html">Forgot Password?</a>
+      </div>
+    </div>
+
+    <!-- Sign-Up Form -->
+    <div class="form-container" id="signup-form">
+      <h2>Student Sign-Up</h2>
+      <form action="/signup" method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="text" name="USN" placeholder="USN" required>
+        <select name="department" required>
+          <option value="">Select a Department</option>
+          <option value="CSE">CSE</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="ME">ME</option>
+          <option value="CE">CE</option>
+          <option value="MCA">MCA</option>
+        </select>
+        <select id="Semester" name="Semester" required>
+          <option value="" disabled selected>Semester</option>
+          <option value="1st">1st</option>
+          <option value="2nd">2nd</option>
+          <option value="3rd">3rd</option>
+          <option value="4th">4th</option>
+          <option value="5th">5th</option>
+          <option value="6th">6th</option>
+          <option value="7th">7th</option>
+          <option value="8th">8th</option>
+        </select>
+        <input type="number" name="phone" placeholder="Phone Number" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Sign-Up</button>
+      </form>
+      <div class="back-link">
+        <a href="#" id="login-link">Already have an account? Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript to switch between Login and Sign-Up forms
+    const loginTab = document.getElementById('login-tab');
+    const signupTab = document.getElementById('signup-tab');
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const loginLink = document.getElementById('login-link'); // Reference to the "Already have an account?" link
+
+    loginTab.addEventListener('click', () => {
+      loginTab.classList.add('active');
+      signupTab.classList.remove('active');
+      loginForm.classList.add('active');
+      signupForm.classList.remove('active');
+    });
+
+    signupTab.addEventListener('click', () => {
+      signupTab.classList.add('active');
+      loginTab.classList.remove('active');
+      signupForm.classList.add('active');
+      loginForm.classList.remove('active');
+    });
+
+    loginLink.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent default link behavior
+      loginTab.click(); // Programmatically trigger the Login tab
+    });
+  </script>
+</body>
+</html>
