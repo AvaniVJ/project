@@ -1,64 +1,62 @@
 const express = require('express');
-const mysql = require('mysql2');
-const bcrypt = require('bcryptjs');
 const bodyParser = require('body-parser');
+const mysql = require('mysql2');
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
+// Create a MySQL connection
+const connection = mysql.createConnection({
+    host: 'localhost',    // or '127.0.0.1'
+    user: 'root',         // Adjust if necessary
+    password: '',         // Usually empty in XAMPP
+    database: 'seating_allocation',
+    port: 3308            // Ensure this is the correct port
+  });
+
+// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Create MySQL connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Diya@2004', // replace with your MySQL root password
-  database: 'exam_seating'
-});
-
-db.connect(err => {
-  if (err) {
-    console.error('Error connecting to MySQL:', err);
-    return;
-  }
-  console.log('Connected to MySQL');
-});
-
-// POST route for login
-app.post('/api/login', (req, res) => {
-  const { username, password, role } = req.body;
-  const table = role === 'Admin' ? 'admins' : role === 'Faculty' ? 'faculty' : 'students';
-
-  const sql = `SELECT * FROM ${table} WHERE username = ?`;
-  db.query(sql, [username], (err, results) => {
-    if (err) return res.status(500).send('Database query error');
-    if (results.length === 0) return res.status(400).send('User not found');
-
-    const user = results[0];
-    bcrypt.compare(password, user.password, (err, match) => {
-      if (err) return res.status(500).send('Error comparing password');
-      if (!match) return res.status(400).send('Invalid credentials');
-
-      // Return user details (password excluded for security)
-      res.json({
-        id: user.id,
-        username: user.username,
-        role: role
-      });
+// Student Registration Route
+app.post('/api/student/register', async (req, res) => {
+    const { name, email, phone_number, role, usn, semester, department } = req.body;
+    
+    // SQL query to insert the student data into the database
+    const query = `
+        INSERT INTO students (name, email, phone_number, role, usn, semester, department) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+    
+    db.query(query, [name, email, phone_number, role, usn, semester, department], (err, result) => {
+        if (err) {
+            return res.status(500).json({ msg: 'Error registering student', error: err });
+        }
+        res.status(200).json({ msg: 'Student registered successfully' });
     });
-  });
 });
 
-// GET route for admin dashboard stats
-app.get('/api/stats', (req, res) => {
-  const stats = {
-    totalStudents: 1200, // You can replace this with a database query
-    totalFaculty: 80, // Replace with actual data
-    totalExamHalls: 15 // Replace with actual data
-  };
-  res.json(stats);
+// Faculty Registration Route
+app.post('/api/faculty/register', async (req, res) => {
+    const { name, email, phone_number, role, faculty_id, department } = req.body;
+    
+    // SQL query to insert the faculty data into the database
+    const query = `
+        INSERT INTO faculty (name, email, phone_number, role, faculty_id, department) 
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+    
+    db.query(query, [name, email, phone_number, role, password, faculty_id, department], (err, result) => {
+        if (err) {
+            return res.status(500).json({ msg: 'Error registering faculty', error: err });
+        }
+        res.status(200).json({ msg: 'Faculty registered successfully' });
+    });
 });
 
+// Start the server
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on http://localhost:${port}`);
+});
+app.get('/',function(req,res){
+    res.sendFile(__dirname+'/index.html');
 });
