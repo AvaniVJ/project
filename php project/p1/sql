@@ -1,0 +1,24 @@
+-- Create the database
+CREATE DATABASE IF NOT EXISTS exam_seat_allotment;
+
+USE exam_seat_allotment;
+
+-- Create students table
+CREATE TABLE IF NOT EXISTS students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- Create halls table
+CREATE TABLE IF NOT EXISTS halls (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- Insert sample data into students
+INSERT INTO students (name) VALUES 
+('Student1'), ('Student2'), ('Student3'), ('Student4'), ('Student5');
+
+-- Insert sample data into halls
+INSERT INTO halls (name) VALUES 
+('Hall1'), ('Hall2'), ('Hall3'), ('Hall4');

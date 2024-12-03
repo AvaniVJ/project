@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .signup-container {
+            margin-top: 50px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sign Up Form -->
+    <div class="container signupselect-container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <h3 class="text-center mb-4">Sign Up</h3>
+                    <form action="submit_signup.php" method="POST">
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <!-- Phone Number -->
+                        <div class="mb-3">
+                            <label for="phone-number" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone-number" name="phone_number" placeholder="Enter your phone number" pattern="[0-9]{10}" required>
+                        </div>
+                        <!-- Role Selection -->
+                        <div class="mb-3">
+                            <label for="role" class="form-label">I am a:</label>
+                            <select class="form-select" id="role" name="role" required>
+                                <option value="" selected disabled>Select your role</option>
+                                <option value="student">Student</option>
+                                <option value="faculty">Faculty</option>
+                            </select>
+                        </div>
+                        <!-- USN (Only for Students) -->
+                        <div class="mb-3 d-none" id="usn-container">
+                            <label for="usn" class="form-label">University Seat Number (USN)</label>
+                            <input type="text" class="form-control" id="usn" name="usn" placeholder="Enter your USN">
+                        </div>
+                        <!-- Semester (Only for Students) -->
+                        <div class="mb-3 d-none" id="semester-container">
+                            <label for="semester" class="form-label">Semester</label>
+                            <select class="form-select" id="semester" name="semester">
+                                <option value="" selected disabled>Select your semester</option>
+                                <option value="1">1st Semester</option>
+                                <option value="2">2nd Semester</option>
+                                <option value="3">3rd Semester</option>
+                                <option value="4">4th Semester</option>
+                                <option value="5">5th Semester</option>
+                                <option value="6">6th Semester</option>
+                                <option value="7">7th Semester</option>
+                                <option value="8">8th Semester</option>
+                            </select>
+                        </div>
+                        <!-- Department (For Both Students and Faculty) -->
+                        <div class="mb-3 d-none" id="department-container">
+                            <label for="department" class="form-label">Department</label>
+                            <select class="form-select" id="department" name="department">
+                                <option value="" selected disabled>Select your department</option>
+                                <option value="cse">Computer Science</option>
+                                <option value="ece">Electronics and Communication</option>
+                                <option value="mech">Mechanical Engineering</option>
+                                <option value="civil">Civil Engineering</option>
+                                <option value="eee">Electrical Engineering</option>
+                            </select>
+                        </div>
+                        <!-- Faculty ID (Only for Faculty) -->
+                        <div class="mb-3 d-none" id="faculty-id-container">
+                            <label for="faculty-id" class="form-label">Faculty ID</label>
+                            <input type="text" class="form-control" id="faculty-id" name="faculty_id" placeholder="Enter your Faculty ID">
+                        </div>
+                        <!-- Password -->
+                        
+                        <!-- Confirm Password -->
+                       
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                        <!-- Link to Login -->
+                        <p class="text-center mt-3">
+                            Already have an account? <a href="loginselect.html">Log In</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Show/Hide Fields Based on Role Selection
+        document.getElementById('role').addEventListener('change', function () {
+            const role = this.value;
+            const usnContainer = document.getElementById('usn-container');
+            const semesterContainer = document.getElementById('semester-container');
+            const facultyIdContainer = document.getElementById('faculty-id-container');
+            const departmentContainer = document.getElementById('department-container');
+
+            if (role === 'student') {
+                usnContainer.classList.remove('d-none');
+                semesterContainer.classList.remove('d-none');
+                departmentContainer.classList.remove('d-none');
+                facultyIdContainer.classList.add('d-none');
+            } else if (role === 'faculty') {
+                usnContainer.classList.add('d-none');
+                semesterContainer.classList.add('d-none');
+                departmentContainer.classList.remove('d-none');
+                facultyIdContainer.classList.remove('d-none');
+            } else {
+                usnContainer.classList.add('d-none');
+                semesterContainer.classList.add('d-none');
+                departmentContainer.classList.add('d-none');
+                facultyIdContainer.classList.add('d-none');
+            }
+        });
+    </script>
+</body>
+
+</html>
